@@ -81,7 +81,7 @@ class Personal(QWidget):
     def update_balance(self):
         cursor = self.db.connect.cursor()
         result = cursor.execute(f"SELECT balance FROM users WHERE login = '{self.login}';")
-        self.balance.setText(f"{result.fetchall()[10][10]} KGS")
+        self.balance.setText(f"{result.fetchall()[0][0]} KGS")
         self.db.connect.commit()
     
     def make_money(self):
@@ -105,7 +105,7 @@ class Personal(QWidget):
             if users_balance >= int(amount):
                 print('OK')
             else:
-                print('Fail')
+                print('Ошибка')
         try:
             cursor.execute(f"INSERT INTO users VALUES ('{login}', '{password}', '{mail}', '{time.ctime()}');")
             self.error.setText("Успешно")
