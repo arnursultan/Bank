@@ -155,6 +155,7 @@ class Personal(QWidget):
             self.result.setText("Не найден.")
 
     def payment_1(self):
+        self.hide_transfer()
         self.show_payment_buttons()
         self.hide_buttons()
         self.electricity.clicked.connect(self.energy)
@@ -175,12 +176,12 @@ class Personal(QWidget):
         cursor = self.db.connect.cursor()
         cursor.execute(f"SELECT balance FROM users WHERE login = '{login}';")
         balance = cursor.fetchall()[0][0]
-        # if balance >= amount:
-        #     cursor.execute(f"UPDATE users SET utilities_water = utilities_water - '{amount}' WHERE login = '{login}';")
-        #     self.db.connect.commit()
-        #     self.result_2.setText("Успешно оплачено")
-        # else:
-        #     self.result_2.setText("Недостаточно средств для оплаты")
+        if balance >= amount:
+            cursor.execute(f"UPDATE users SET utilities_electricity = utilities_electricity - '{amount}' WHERE login = '{login}';")
+            self.db.connect.commit()
+            self.result_2.setText("Успешно оплачено")
+        else:
+            self.result_2.setText("Недостаточно средств.")
 
     def waters(self):
         self.show_payment()
@@ -193,12 +194,12 @@ class Personal(QWidget):
         cursor = self.db.connect.cursor()
         cursor.execute(f"SELECT balance FROM users WHERE login = '{login}';")
         balance = cursor.fetchall()[0][0]
-        # if balance >= amount:
-        #     cursor.execute(f"UPDATE users SET utilities_electricity = utilities_electricity - '{amount}' WHERE login = '{login}';")
-        #     self.db.connect.commit()
-        #     self.result_2.setText("Успешно оплачено")
-        # else:
-        #     self.result_2.setText("Недостаточно средств для оплаты")
+        if balance >= amount:
+            cursor.execute(f"UPDATE users SET utilities_water = utilities_water - '{amount}' WHERE login = '{login}';")
+            self.db.connect.commit()
+            self.result_2.setText("Успешно оплачено")
+        else:
+            self.result_2.setText("Недостаточно средств.")
 
     def sewers(self):
         self.show_payment()
@@ -211,12 +212,12 @@ class Personal(QWidget):
         cursor = self.db.connect.cursor()
         cursor.execute(f"SELECT balance FROM users WHERE login = '{login}';")
         balance = cursor.fetchall()[0][0]
-        # if balance >= amount:
-        #     cursor.execute(f"UPDATE users SET utilities_trashnyak = utilities_trashnyak - '{amount}' WHERE login = '{login}';")
-        #     self.db.connect.commit()
-        #     self.result_2.setText("Успешно оплачено")
-        # else:
-        #     self.result_2.setText("Недостаточно средств для оплаты")
+        if balance >= amount:
+            cursor.execute(f"UPDATE users SET utilities_sewer = utilities_sewer - '{amount}' WHERE login = '{login}';")
+            self.db.connect.commit()
+            self.result_2.setText("Успешно оплачено")
+        else:
+            self.result_2.setText("Недостаточно средств.")
 
     def gass(self):
         self.show_payment()
@@ -229,12 +230,12 @@ class Personal(QWidget):
         cursor = self.db.connect.cursor()
         cursor.execute(f"SELECT balance FROM users WHERE login = '{login}';")
         balance = cursor.fetchall()[0][0]
-        # if balance >= amount:
-        #     cursor.execute(f"UPDATE users SET utilities_internet = utilities_internet - '{amount}' WHERE login = '{login}';")
-        #     self.db.connect.commit()
-        #     self.result_2.setText("Успешно оплачено")
-        # else:
-        #     self.result_2.setText("Недостаточно средств для оплаты")
+        if balance >= amount:
+            cursor.execute(f"UPDATE users SET utilities_gas = utilities_gas - '{amount}' WHERE login = '{login}';")
+            self.db.connect.commit()
+            self.result_2.setText("Успешно оплачено")
+        else:
+            self.result_2.setText("Недостаточно средств.")
 
     def garbages(self):
         self.show_payment()
@@ -247,24 +248,13 @@ class Personal(QWidget):
         cursor = self.db.connect.cursor()
         cursor.execute(f"SELECT balance FROM users WHERE login = '{login}';")
         balance = cursor.fetchall()[0][0]
-        # if balance >= amount:
-        #     cursor.execute(f"UPDATE users SET utilities_gas = utilities_gas - '{amount}' WHERE login = '{login}';")
-        #     self.db.connect.commit()
-        #     self.result_2.setText("Успешно оплачено")
-        # else:
-        #     self.result_2.setText("Недостаточно средств для оплаты")
+        if balance >= amount:
+            cursor.execute(f"UPDATE users SET utilities_garbage = utilities_garbage - '{amount}' WHERE login = '{login}';")
+            self.db.connect.commit()
+            self.result_2.setText("Успешно оплачено")
+        else:
+            self.result_2.setText("Недостаточно средств.")
 
-
-
-    # def payments(self):
-    #     self.show_payment_buttons()
-    #     self.result_2.hide()
-    #     amount = self.amount_2.text()
-    #     if 
-    #     cursor = self.db.connect.cursor()
-        
-    #     cursor.execute(f"UPDATE users SET communalka_water = communalka_water - {amount} WHERE login = '{self.login_2}';")
-        
 
 class Bank(QMainWindow, ):
     def __init__(self):
@@ -300,7 +290,6 @@ class Bank(QMainWindow, ):
         else:
             self.show_error()
             self.error.setText("Неправильные данные")
-
 
 app = QApplication(sys.argv)
 bank = Bank()
