@@ -1,3 +1,5 @@
 env/
 __pycache__/
 bank.db
+main.ui
+signup.ui
